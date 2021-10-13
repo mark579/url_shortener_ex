@@ -14,10 +14,11 @@ defmodule UrlShortenerExWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", UrlShortenerExWeb do
-    pipe_through :browser
+  scope "/api", UrlShortenerExWeb do
+    pipe_through :api
 
-    get "/", PageController, :index
+    get "/urls/:slug", UrlController, :get
+    post "/urls", UrlController, :create
   end
 
   # Other scopes may use custom stacks.
