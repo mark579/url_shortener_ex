@@ -1,0 +1,7 @@
+build
+node_modules
+yarn-error.log
+README.md
+.git
+.gitattributes
+.gitignore

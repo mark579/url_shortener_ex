@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  url-shortener-ex:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: ecto://postgres:postgres@db/url_shortener_ex_dev
+      DATABASE_USER: postgres
+      DATABASE_PASS: postgres
+      DATABASE_NAME: url_shortener_ex_dev
+      DATABASE_PORT: 5432
+      DATABASE_HOST: db
+    ports:
+      - "4000:4000"
+    restart: always
+    depends_on:
+      - db
+  db:
+    image: postgres:14.0-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  ui:
+    build:
+      context: ./client/
+    restart: always
+    depends_on:
+      - url-shortener-ex
+    ports:
+      - "8080:8080"
+volumes:
+  pgdata:

@@ -1,0 +1,14 @@
+_build
+cover
+deps
+doc
+.fetch
+*.ez
+*.tar
+priv/static
+Dockerfile
+*.env
+.gitignore
+tmp
+# Don't put client in, since it will be it's own container
+client
