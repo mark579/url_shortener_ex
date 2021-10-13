@@ -1,9 +1,8 @@
-name: Yarn Tests
-
 on: [push]
 
 jobs:
-  build:
+  test:
+    name: React CI
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -13,6 +12,6 @@ jobs:
       - name: Setup Node ${{ matrix.node-version }}
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: ${{ matrix.node-version }}
       - run: cd client && npm install
       - run: cd client && npm test
