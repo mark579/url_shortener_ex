@@ -1,8 +1,9 @@
-defmodule UrlShortenerExWeb.PageControllerTest do
+defmodule UrlShortenerExWeb.UrlControllerTest do
   use UrlShortenerExWeb.ConnCase
 
   test "GET /", %{conn: conn} do
-    conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert_error_sent 404, fn ->
+      get(conn, "/api/urls/abc")
+    end
   end
 end
