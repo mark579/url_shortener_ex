@@ -21,9 +21,15 @@ defmodule UrlShortenerEx.Url do
     |> validate_url(:raw)
   end
 
-  def validate_url(changeset, field, options \\ []) do
+  def create_url(raw_url, slug) do
+    url = Url.changeset(%Url{}, %{slug: slug, raw: raw_url})
+    Repo.insert(url)
+  end
+
+  def validate_url(changeset, field) do
     validate_change(changeset, field, fn _, value ->
-      case !!(URI.parse(value).host) do
+      uri = URI.parse(value)
+      case !!(uri.host && uri.path && uri.scheme) do
         true ->
           []
         false ->

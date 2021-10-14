@@ -17,9 +17,8 @@ defmodule UrlShortenerExWeb.UrlController do
       redirect(conn, external: url.raw)
     end
 
-    def create(conn, %{"raw_url" => raw_url}) do
-        url = Url.changeset(%Url{}, %{slug: generate_slug, raw: raw_url})
-        {status, url} = Repo.insert(url)
+    def create(conn, %{"raw" => raw}) do
+        {status, url} = Url.create_url(raw, generate_slug())
         case status do
           :ok -> json(conn, %{slug: url.slug})
           :error -> send_resp(conn, 400, "Invalid URL")
@@ -30,7 +29,7 @@ defmodule UrlShortenerExWeb.UrlController do
       exists = Url.slug_exists(slug)
       case exists do
         false -> slug
-        true -> generate_slug
+        true -> generate_slug()
       end
     end
 
