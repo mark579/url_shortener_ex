@@ -1,13 +1,14 @@
 defmodule UrlShortenerExWeb.UrlControllerTest do
   use UrlShortenerExWeb.ConnCase
-
+  import Ecto.Query
   alias UrlShortenerEx.Url
+  alias UrlShortenerEx.Repo
 
-  @create_attrs %{raw: "https://google.com/abc", slug: "ABC123"}
-  @invalid_attrs %{raw: "jdfkdjdkj", slug: "BDC"}
+  @create_attrs %{raw: "https://google.com/abc"}
+  @invalid_attrs %{raw: "jdfkdjdkj"}
 
   def fixture(:url) do
-    {:ok, url} = Url.create_url(@create_attrs.raw, @create_attrs.slug)
+    {:ok, url} = Url.create_url(@create_attrs.raw)
     url
   end
 
@@ -23,7 +24,8 @@ defmodule UrlShortenerExWeb.UrlControllerTest do
     setup [:create_url]
 
     test "GET /api/urls/<slug> redirects when found", %{conn: conn} do
-      conn = get(conn, Routes.url_path(conn, :get, @create_attrs.slug))
+      url = Repo.one(from(u in Url, where: u.raw == ^@create_attrs.raw))
+      conn = get(conn, Routes.url_path(conn, :get, url.slug))
       assert redirected_to(conn) == @create_attrs.raw
     end
   end

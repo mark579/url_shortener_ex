@@ -18,25 +18,11 @@ defmodule UrlShortenerExWeb.UrlController do
     end
 
     def create(conn, %{"raw" => raw}) do
-        {status, url} = Url.create_url(raw, generate_slug())
+        {status, url} = Url.create_url(raw)
         case status do
           :ok -> json(conn, %{slug: url.slug})
           :error -> send_resp(conn, 400, "Invalid URL")
         end
-    end
-
-    def generate_slug(slug) do
-      exists = Url.slug_exists(slug)
-      case exists do
-        false -> slug
-        true -> generate_slug()
-      end
-    end
-
-    def generate_slug do
-      valid_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-      slug = for _ <- 1..15, into: "", do: <<Enum.random(valid_chars)>>
-      generate_slug(slug)
     end
   end
   

@@ -21,8 +21,8 @@ defmodule UrlShortenerEx.Url do
     |> validate_url(:raw)
   end
 
-  def create_url(raw_url, slug) do
-    url = Url.changeset(%Url{}, %{slug: slug, raw: raw_url})
+  def create_url(raw_url) do
+    url = Url.changeset(%Url{}, %{slug: generate_slug(), raw: raw_url})
     Repo.insert(url)
   end
 
@@ -44,5 +44,19 @@ defmodule UrlShortenerEx.Url do
       0 -> false
       1 -> true
     end
+  end
+
+  defp generate_slug(slug) do
+    exists = Url.slug_exists(slug)
+    case exists do
+      false -> slug
+      true -> generate_slug()
+    end
+  end
+
+  defp generate_slug do
+    valid_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+    slug = for _ <- 1..15, into: "", do: <<Enum.random(valid_chars)>>
+    generate_slug(slug)
   end
 end
