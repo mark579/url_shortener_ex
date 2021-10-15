@@ -15,6 +15,7 @@ jobs:
       - run: cd client && npm install
       - run: cd client && npm test
   docker:
+    needs: test
     runs-on: ubuntu-latest
     name: Build and push
     steps:
@@ -32,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./client 
+          context: client 
           tags: markadavenport/url_shortener_ex-ui:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

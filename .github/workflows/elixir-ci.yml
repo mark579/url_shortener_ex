@@ -35,6 +35,7 @@ jobs:
       - run: mix deps.get
       - run: mix test
   docker:
+    needs: test
     runs-on: ubuntu-latest
     name: Build and push
     steps:
