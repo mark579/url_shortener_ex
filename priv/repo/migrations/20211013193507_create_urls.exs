@@ -3,7 +3,7 @@ defmodule UrlShortenerEx.Repo.Migrations.CreateUrls do
 
   def change do
     create table(:urls) do
-      add :raw, :string
+      add :raw, :string, size: 2000
       add :slug, :string
 
       timestamps()

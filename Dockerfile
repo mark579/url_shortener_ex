@@ -4,8 +4,7 @@ RUN apk add postgresql-client && \
   apk add build-base && \
   rm -rf /var/cache/apk/*
 
-# Just using dev for this example program
-ENV MIX_ENV dev
+ENV MIX_ENV prod
 
 # Install hex package manager and rebar
 # By using --force, we don’t need to type “Y” to confirm the installation

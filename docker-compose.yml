@@ -11,6 +11,7 @@ services:
       DATABASE_NAME: url_shortener_ex_dev
       DATABASE_PORT: 5432
       DATABASE_HOST: db
+      SECRET_KEY_BASE: "${SECRET_KEY_BASE}"
     ports:
       - "4000:4000"
     restart: always
@@ -32,6 +33,6 @@ services:
     depends_on:
       - url-shortener-ex
     ports:
-      - "8080:8080"
+      - "5000:5000"
 volumes:
   pgdata:

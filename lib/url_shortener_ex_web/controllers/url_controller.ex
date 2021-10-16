@@ -21,7 +21,7 @@ defmodule UrlShortenerExWeb.UrlController do
         {status, url} = Url.create_url(raw)
         case status do
           :ok -> json(conn, %{slug: url.slug})
-          :error -> send_resp(conn, 400, "Invalid URL")
+          :error -> send_resp(conn |> put_resp_content_type("application/json") , 400, Jason.encode!(%{"error" => "Invalid URL"}))
         end
     end
   end

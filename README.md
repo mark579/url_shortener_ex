@@ -1,19 +1,40 @@
 # UrlShortenerEx
 
-To start your Phoenix server:
+## Getting Started
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+To simply run the app you can use `docker-compose up`. 
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Then open your browser and go to [http://localhost:5000](localhost:5000) 
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+### Development
 
-## Learn more
+To run locally and do development you will need. 
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+* Node Version 14
+* Elixir 1.12.3
+* Yarn 1.2 or Greater
+
+Once you have all dependencies installed. Install node modules. 
+
+`cd client && yarn install`
+
+There is a Procfile you so you can use [goreman](https://github.com/mattn/goreman) or similar. Note: You will need to install GO for this. 
+
+Otherwise you will need to start the frontend and backend seperately. 
+
+Backend : `mix phx.server`
+Frontend: `cd client && yarn run start`
+
+You will also need to set these environment variables then starting the backend.
+
+* DATABASE_USER=postgres
+
+* DATABASE_PASS=postgres
+
+* DATABASE_NAME=url_shortener_ex_dev
+
+* DATABASE_PORT=5432
+
+* DATABASE_HOST=localhost
+
+A nice way to do this is using [direnv](https://direnv.net/). Otherwise you can set in your profile or simply pass on the command line. 
