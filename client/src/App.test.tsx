@@ -2,6 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    pathname: "localhost:5000/",
+  }),
+}));
+
 test('renders the top bar', () => {
   render(<App />);
   const headerElement = screen.getByText(/URL Shortener/i);

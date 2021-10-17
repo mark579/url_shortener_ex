@@ -23,7 +23,7 @@ defmodule UrlShortenerExWeb.UrlControllerTest do
 
     test "GET /api/urls/<slug> returns not found when doesn't exist", %{conn: conn} do
       conn = get(conn, Routes.url_path(conn, :get, "ABC"))
-      assert response(conn, 404)
+      assert redirected_to(conn) == "/?status=NOT_FOUND"
     end
   end
 

@@ -1,27 +1,43 @@
 import * as React from "react";
+import { useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { Button, IconButton } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import Snackbar from '@mui/material/Snackbar';
+import Snackbar from "@mui/material/Snackbar";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
 export default function UrlForm() {
+  const search = useLocation().search;
+  const paramStatus = new URLSearchParams(search).get("status");
+  
   const [longURL, setLongURL] = React.useState("");
   const [shortURL, setShortURL] = React.useState("");
   const [error, setError] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [status, setStatus] = React.useState(paramStatus);
 
   const handleLongUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLongURL(event.target.value);
     setShortURL("");
   };
 
-  const handleSnackBarClose = (
+  const handleStatusClose = (
     event: React.SyntheticEvent | React.MouseEvent,
-    reason?: string,
+    reason?: string
   ) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setStatus("");
+  };
+
+  const handleClipBoardClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -59,15 +75,15 @@ export default function UrlForm() {
       });
   };
 
-  const copyToClipBoard = async() => {
-    if ('clipboard' in navigator) {
-        setOpen(true);
-        return await navigator.clipboard.writeText(shortURL);
-      } else {
-        setOpen(true);
-        return document.execCommand('copy', true, shortURL);
-      }
-  }
+  const copyToClipBoard = async () => {
+    if ("clipboard" in navigator) {
+      setOpen(true);
+      return await navigator.clipboard.writeText(shortURL);
+    } else {
+      setOpen(true);
+      return document.execCommand("copy", true, shortURL);
+    }
+  };
 
   return (
     <>
@@ -108,7 +124,7 @@ export default function UrlForm() {
           />
         </Box>
         <Box sx={{ mx: 1 }} component="span">
-          <Button 
+          <Button
             onClick={shortenUrl}
             variant="outlined"
             disabled={longURL.length === 0}
@@ -117,7 +133,11 @@ export default function UrlForm() {
           </Button>
         </Box>
         <Box sx={{ mx: 1 }} component="span">
-          <IconButton onClick={copyToClipBoard} aria-label="copy to clipboard" disabled={shortURL.length === 0}>
+          <IconButton
+            onClick={copyToClipBoard}
+            aria-label="copy to clipboard"
+            disabled={shortURL.length === 0}
+          >
             <ContentCopyIcon />
           </IconButton>
         </Box>
@@ -125,8 +145,14 @@ export default function UrlForm() {
       <Snackbar
         open={open}
         autoHideDuration={2000}
-        onClose={handleSnackBarClose}
+        onClose={handleClipBoardClose}
         message="Copied to Clipboard"
+      />
+      <Snackbar
+        open={status === "NOT_FOUND"}
+        autoHideDuration={5000}
+        onClose={handleStatusClose}
+        message="Shortnend URL not Found!"
       />
     </>
   );

@@ -2,9 +2,12 @@
 
 ## Getting Started
 
-To simply run the app you can use `docker-compose up` . 
 
-Then open your browser and go to [http://localhost:5000](localhost:5000) 
+To simply run the app you can use `docker-compose up`. 
+
+Then open your browser and go to [http://localhost:5000](localhost:5000).
+
+This requires you have both docker, and docker-compose installed.
 
 ### Development
 
@@ -39,3 +42,10 @@ You will also need to set these environment variables then starting the backend.
 * DATABASE_HOST=localhost
 
 A nice way to do this is using [direnv](https://direnv.net/). Otherwise you can set in your profile or simply pass on the command line. 
+
+### Tests
+
+To run tests, once you have your development environment setup you can run. 
+
+Backend: `mix test`
+Frontend: `cd client && yarn run test`
