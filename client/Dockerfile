@@ -4,7 +4,7 @@ WORKDIR /var/appbuild
 
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install --frozen-lockfile --production
+RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 
