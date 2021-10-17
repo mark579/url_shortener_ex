@@ -7,14 +7,13 @@ defmodule UrlShortenerExWeb.UrlController do
   
     def get(conn, %{"slug" => slug}) do
       url = Repo.one(from u in Url, where: u.slug == ^slug, select: [:raw])
-      
-      if url == nil do
-        conn
-          |> put_resp_content_type("text/plain")
-          |> send_resp(404, "A URL with that slug was not found.")
-      end
 
-      redirect(conn, external: url.raw)
+      case url do
+        nil -> conn
+                |> put_resp_content_type("text/plain")
+                |> send_resp(404, "That shortened URL was not found.")
+        _ -> redirect(conn, external: url.raw)      
+      end
     end
 
     def create(conn, %{"raw" => raw}) do

@@ -1,6 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Snackbar from '@mui/material/Snackbar';
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
@@ -8,10 +10,22 @@ export default function UrlForm() {
   const [longURL, setLongURL] = React.useState("");
   const [shortURL, setShortURL] = React.useState("");
   const [error, setError] = React.useState("");
+  const [open, setOpen] = React.useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLongUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLongURL(event.target.value);
     setShortURL("");
+  };
+
+  const handleSnackBarClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   const shortenUrl = () => {
@@ -45,6 +59,16 @@ export default function UrlForm() {
       });
   };
 
+  const copyToClipBoard = async() => {
+    if ('clipboard' in navigator) {
+        setOpen(true);
+        return await navigator.clipboard.writeText(shortURL);
+      } else {
+        setOpen(true);
+        return document.execCommand('copy', true, shortURL);
+      }
+  }
+
   return (
     <>
       <Box
@@ -67,7 +91,7 @@ export default function UrlForm() {
             value={longURL}
             helperText={error}
             error={error.length > 0}
-            onChange={handleChange}
+            onChange={handleLongUrlChange}
           />
         </Box>
         <Box>
@@ -81,13 +105,29 @@ export default function UrlForm() {
             disabled
             maxRows={4}
             value={shortURL}
-            onChange={handleChange}
           />
         </Box>
-        <Button onClick={shortenUrl} variant="outlined">
-          Shorten!
-        </Button>
+        <Box sx={{ mx: 1 }} component="span">
+          <Button 
+            onClick={shortenUrl}
+            variant="outlined"
+            disabled={longURL.length === 0}
+          >
+            Shorten!
+          </Button>
+        </Box>
+        <Box sx={{ mx: 1 }} component="span">
+          <IconButton onClick={copyToClipBoard} aria-label="copy to clipboard" disabled={shortURL.length === 0}>
+            <ContentCopyIcon />
+          </IconButton>
+        </Box>
       </Box>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleSnackBarClose}
+        message="Copied to Clipboard"
+      />
     </>
   );
 }

@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-To simply run the app you can use `docker-compose up`. 
+To simply run the app you can use `docker-compose up` . 
 
 Then open your browser and go to [http://localhost:5000](localhost:5000) 
 
@@ -16,13 +16,14 @@ To run locally and do development you will need.
 
 Once you have all dependencies installed. Install node modules. 
 
-`cd client && yarn install`
+ `cd client && yarn install`
 
 There is a Procfile you so you can use [goreman](https://github.com/mattn/goreman) or similar. Note: You will need to install GO for this. 
 
 Otherwise you will need to start the frontend and backend seperately. 
 
 Backend : `mix phx.server`
+
 Frontend: `cd client && yarn run start`
 
 You will also need to set these environment variables then starting the backend.

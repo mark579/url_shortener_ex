@@ -12,14 +12,6 @@ defmodule UrlShortenerExWeb.UrlControllerTest do
     url
   end
 
-  describe "non existant URL" do
-    test "GET /api/urls/abc", %{conn: conn} do
-      assert_error_sent(404, fn ->
-        get(conn, Routes.url_path(conn, :get, "ABC"))
-      end)
-    end
-  end
-
   describe "Get URL" do
     setup [:create_url]
 
@@ -27,6 +19,11 @@ defmodule UrlShortenerExWeb.UrlControllerTest do
       url = Repo.one(from(u in Url, where: u.raw == ^@create_attrs.raw))
       conn = get(conn, Routes.url_path(conn, :get, url.slug))
       assert redirected_to(conn) == @create_attrs.raw
+    end
+
+    test "GET /api/urls/<slug> returns not found when doesn't exist", %{conn: conn} do
+      conn = get(conn, Routes.url_path(conn, :get, "ABC"))
+      assert response(conn, 404)
     end
   end
 
