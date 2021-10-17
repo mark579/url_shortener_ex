@@ -36,7 +36,7 @@ jobs:
       - run: mix test
       - run: mix format --check-formatted
   docker:
-    needs: test
+    needs: test_and_format
     runs-on: ubuntu-latest
     name: Build and push
     steps:

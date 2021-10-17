@@ -1,7 +1,7 @@
 on: push
 
 jobs:
-  test:
+  test_and_lint:
     runs-on: ubuntu-latest
     name: React CI
     strategy:
@@ -16,7 +16,7 @@ jobs:
       - run: cd client && npm test
       - run: cd client && npx prettier --check .
   docker:
-    needs: test
+    needs: test_and_lint
     runs-on: ubuntu-latest
     name: Build and push
     steps:
