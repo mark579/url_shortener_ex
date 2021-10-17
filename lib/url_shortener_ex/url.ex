@@ -7,8 +7,8 @@ defmodule UrlShortenerEx.Url do
   alias UrlShortenerEx.Repo
 
   schema "urls" do
-    field :raw, :string
-    field :slug, :string
+    field(:raw, :string)
+    field(:slug, :string)
 
     timestamps()
   end
@@ -29,9 +29,11 @@ defmodule UrlShortenerEx.Url do
   def validate_url(changeset, field) do
     validate_change(changeset, field, fn _, value ->
       uri = URI.parse(value)
+
       case !!(uri.host && uri.path && uri.scheme) do
         true ->
           []
+
         false ->
           [{field, "URL is not Valid"}]
       end
@@ -39,7 +41,8 @@ defmodule UrlShortenerEx.Url do
   end
 
   def slug_exists(slug) do
-    count = Repo.one(from u in Url, where: u.slug == ^slug, select: count(u.id))
+    count = Repo.one(from(u in Url, where: u.slug == ^slug, select: count(u.id)))
+
     case count do
       0 -> false
       1 -> true
@@ -48,6 +51,7 @@ defmodule UrlShortenerEx.Url do
 
   defp generate_slug(slug) do
     exists = Url.slug_exists(slug)
+
     case exists do
       false -> slug
       true -> generate_slug()

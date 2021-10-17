@@ -7,7 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
-export default function UrlForm() {
+export default function UrlForm(): React.ReactElement {
   const search = useLocation().search;
   const paramStatus = new URLSearchParams(search).get("status");
 
@@ -45,7 +45,7 @@ export default function UrlForm() {
   };
 
   const shortenUrl = () => {
-    function handleErrors(response: any) {
+    function handleErrors(response: Response) {
       if (!response.ok) {
         if (response.status === 400) {
           setError("Invalid URL Format");

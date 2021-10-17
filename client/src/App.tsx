@@ -5,7 +5,7 @@ import TopBar from "./TopBar";
 import "./App.css";
 import UrlForm from "./UrlForm";
 
-function App() {
+function App(): React.ReactElement {
   return (
     <div className="App">
       <TopBar />
