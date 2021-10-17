@@ -10,7 +10,7 @@ import { Typography } from "@mui/material";
 export default function UrlForm() {
   const search = useLocation().search;
   const paramStatus = new URLSearchParams(search).get("status");
-  
+
   const [longURL, setLongURL] = React.useState("");
   const [shortURL, setShortURL] = React.useState("");
   const [error, setError] = React.useState("");

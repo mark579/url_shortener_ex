@@ -19,7 +19,7 @@ test("renders the form and buttons", () => {
   const longBox = screen.getByLabelText(/Long URL/i);
   const shortenButton = screen.getByText(/Shorten!/i);
   const clipBoardButton = screen.getByTestId("ContentCopyIcon");
-  
+
   expect(shortBox).toBeInTheDocument();
   expect(longBox).toBeInTheDocument();
   expect(shortenButton).toBeInTheDocument();

@@ -1,6 +1,6 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -9,13 +9,13 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-test('renders the top bar', () => {
+test("renders the top bar", () => {
   render(<App />);
   const headerElement = screen.getByText(/URL Shortener/i);
   expect(headerElement).toBeInTheDocument();
 });
 
-test('renders the URL Form', () => {
+test("renders the URL Form", () => {
   render(<App />);
   const longLabel = screen.getByLabelText(/Long URL/i);
   const shortLabel = screen.getByLabelText(/Short URL/i);
