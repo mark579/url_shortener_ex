@@ -152,7 +152,7 @@ export default function UrlForm() {
         open={status === "NOT_FOUND"}
         autoHideDuration={5000}
         onClose={handleStatusClose}
-        message="Shortnend URL not Found!"
+        message="Shortened URL not Found!"
       />
     </>
   );
