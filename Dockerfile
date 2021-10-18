@@ -20,6 +20,7 @@ RUN mix deps.compile
 # Copy all application files
 COPY . ./
 
+# For production we should do a release here and a multi stage build
 RUN mix do compile
 
 RUN chmod +x docker_start.sh

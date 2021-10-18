@@ -16,4 +16,5 @@ mix ecto.migrate
 echo "Migrations finished."
 
 # Start the server.
+echo "Starting Server go to http://localhost:5000 to shorten URLS"
 exec mix phx.server
