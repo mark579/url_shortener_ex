@@ -3,7 +3,11 @@
 ## Getting Started
 
 
-To simply run the app you can use `docker-compose up`. 
+To simply run the app you can use `docker-compose -f docker-compose.yml up`. 
+
+This will pull the published images and run directly. If you'd rather build the images locally run. 
+
+`docker-compose up`
 
 Then open your browser and go to [http://localhost:5000](localhost:5000).
 

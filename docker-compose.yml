@@ -2,8 +2,7 @@ version: "3.7"
 
 services:
   url-shortener-ex:
-    build:
-      context: .
+    image: markadavenport/url_shortener_ex:latest
     environment:
       DATABASE_URL: ecto://postgres:postgres@db/url_shortener_ex_dev
       DATABASE_USER: postgres
@@ -27,8 +26,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
   ui:
-    build:
-      context: ./client/
+    image: markadavenport/url_shortener_ex-ui:latest
     restart: always
     depends_on:
       - url-shortener-ex

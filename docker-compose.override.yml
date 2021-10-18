@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  url-shortener-ex:
+    build:
+      context: .
+  db:
+    image: postgres:14.0-alpine
+  ui:
+    build:
+      context: ./client
+volumes:
+  pgdata:
